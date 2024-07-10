@@ -117,7 +117,7 @@ function Eras (){
 function Glossary (){
   return(
     <View style = {styles.screen}>
-     <Image source={require('../FighterPedia/FPstuff/MesserschmittBf109/im1.png')} style={styles.image}/>
+     
     </View>
   )
 }
