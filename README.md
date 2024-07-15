@@ -1,6 +1,6 @@
 This is an app made on React Native called 'Fighter Pedia'.
 
-Main Idea
+Main Idea: 
 Fighter Pedia is an iPhone app that presents fighter planes’ maniacs with information on over
 ninety fighter planes. It allows user to compare different fighter planes, set them as wallpapers
 and guess the planes.
