@@ -5,6 +5,11 @@ import LogoImage from '../FighterPedia/FPstuff/file.png';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { Provider, useSelector, useDispatch } from 'react-redux';
+import { store } from './store/store'
+import { loginAction } from './store/userActions';
+import { logoutAction } from './store/userActions';
+
 function CustomButton ({ title, onPress, buttonStyle, textStyle }) {
   return (
     <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
@@ -27,7 +32,7 @@ function SplashScreen () {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false); 
-      navigation.navigate('Home');
+      navigation.navigate('LogIn');
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -109,7 +114,7 @@ const Drawer = ({ title, children }) => {
 
   const heightInterpolation = animation.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 220], // Adjust to desired height
+    outputRange: [0, 220], 
   });
 
   return (
@@ -472,6 +477,53 @@ function Glossary (){
   )
 }
 
+function SignScreen() {
+  const isSignedIn = useSelector(state => state.userData.isSignedIn);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  
+  
+  const handleLogin = () => {
+    dispatch(loginAction());
+    navigation.navigate('Home');
+  };
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
+
+  return (
+    <ImageBackground source={require('./FPstuff/Background.jpg')} style={styles.background}>
+      <View style={styles.overlay}>
+
+      <View style={styles.cont}>
+      <Text style = {styles.heading}>Signed in status: {isSignedIn ? 'yes' : 'no'}</Text>
+
+      {isSignedIn ? (
+        <View>
+        <Text style = {styles.heading} >Welcome! You are signed in.</Text>
+        <CustomLongButton title="Go to Home" onPress={()=> navigation.navigate('Home')} buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2 }}
+              textStyle={{ color: 'white' }} />
+        <CustomLongButton title="Logout" onPress={handleLogout} buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2 }}
+              textStyle={{ color: 'white' }} />
+        </View>
+      ) : (
+        <View>
+          <Text style = {styles.heading}>Please Sign In</Text>
+        <CustomLongButton title="Log in" onPress={handleLogin} buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2 }}
+              textStyle={{ color: 'white' }} />
+        </View>
+      )} 
+
+    </View>
+    </View>
+    </ImageBackground>
+  );
+}
+
+  
+
+
+
 function HomeScreen () {
   const navigation = useNavigation();
     return (
@@ -533,15 +585,25 @@ function HomeScreen () {
 
 const App = () => {
   return (
+    <Provider store = {store}>
   <NavigationContainer>
     <Stack.Navigator>
 
         <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}}/>
         
+        <Stack.Screen name ="LogIn" component={SignScreen}
+        options={{
+          headerTitle: 'Log In',
+          headerBackVisible: false,
+          headerStyle: styles.header, 
+            headerTitleStyle: styles.headerTitle, 
+          }}
+        />
+
         <Stack.Screen name="Home" component={HomeScreen} 
         options={{
           headerTitle: 'FighterPedia',
-          headerBackVisible: false,
+          headerTintColor: 'white',
           headerStyle: styles.header, 
             headerTitleStyle: styles.headerTitle, 
           }} />
@@ -604,7 +666,7 @@ const App = () => {
 
       </Stack.Navigator>
   </NavigationContainer>
-  
+  </Provider>
   )
 };
 
@@ -783,6 +845,16 @@ const styles = StyleSheet.create({
     padding: 15,
     color: 'white',
   },
-});
+    cont: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    },
+    text: {
+      fontSize: 20,
+      color: 'black',
+      marginBottom: 10,
+    },
+  });
 
 export default App;
