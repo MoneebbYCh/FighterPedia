@@ -9,4 +9,4 @@ at least eight pictures of each plane from varying angles with a detailed descri
 year of manufacture, combat history, avionics, pricing etc.
 
 
-<img src="https://github.com/user-attachments/assets/c084311e-8ce5-4736-b60a-a64d8423ae93" width="600" height="1000"/>
+<img src="https://github.com/user-attachments/assets/c084311e-8ce5-4736-b60a-a64d8423ae93" width="500" height="1000"/>
