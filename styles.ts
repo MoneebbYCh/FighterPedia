@@ -105,11 +105,14 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       textDecorationColor: 'white',
       color: 'white',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      alignSelf: 'center',
     },
     infotext: {
       fontSize: 14,
       marginBottom: 30,
+      marginLeft: 5,
+      marginRight: 5,
       textDecorationColor: 'white',
       color: 'white',
     },
@@ -183,6 +186,33 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'black',
         marginBottom: 10,
+      },
+      inputcontainer: {
+        flex: 1,
+        padding: 16,
+      },
+      input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 12,
+        paddingLeft: 8,
+        color: 'white',
+      },
+      inputimage: {
+        width: 100,
+        height: 100,
+        marginBottom: 12,
+      },
+      SuccessMssgtext: {
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold',
+        borderRadius: 15,
+        marginTop: 30,
+        marginLeft: 80,
+        alignContent: 'center',
+        justifyContent: 'center',
       },
     });
   
