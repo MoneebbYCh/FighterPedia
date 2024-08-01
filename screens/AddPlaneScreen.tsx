@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Image, ImageBackground } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Image, ImageBackground, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { saveData } from '../storage/storage';
 import CustomLongButton from '../components/CustomLongButton';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import styles from '../styles';
 import { generateUniqueId } from '../type/idGenerator'; 
+import { RootStackParamList, Plane } from '../type/types';
+
+type AddPlaneRouteProp = RouteProp<RootStackParamList, 'AddPlane'>;
 
 const AddPlane: React.FC = () => {
+  const route = useRoute<AddPlaneRouteProp>();
+  const navigation = useNavigation();
+  const plane = route.params?.plane;
+
+  const [nameText, setNameText] = useState<string>('');
   const [generalInfoText, setGeneralInfoText] = useState<string>('');
   const [generalCharText, setGeneralCharText] = useState<string>('');
   const [performanceText, setPerformanceText] = useState<string>('');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (plane) {
+      setNameText(plane.title);
+      setGeneralInfoText(plane.generalInfo);
+      setGeneralCharText(plane.generalChar);
+      setPerformanceText(plane.performance);
+      setImage(plane.image);
+    }
+  }, [plane]);
 
   const selectImage = async () => {
     try {
@@ -27,25 +44,46 @@ const AddPlane: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    const data = { 
-      id : generateUniqueId,
+    const newId = plane ? plane.id : generateUniqueId();
+    if (typeof newId !== 'string' || newId.trim() === '') {
+      console.error('Invalid id generated:', newId);
+      Alert.alert("Error", "Unable to save plane due to invalid ID.");
+      return;
+    }
+  
+    const data: Plane = { 
+      id: newId,
+      title: nameText,
       generalInfo: generalInfoText, 
       generalChar: generalCharText, 
       performance: performanceText, 
-      image 
+      image: image || ''
     };
-    await saveData('userInput', data);
-    setSaveSuccess(true);
-    setTimeout(() => {
+  
+    try {
+      await saveData(newId, data);
+      setSaveSuccess(true);
+      setTimeout(() => {
         setSaveSuccess(false);
-        navigation.navigate('FighterCollection');
+        navigation.navigate('Home');
       }, 1000);
+    } catch (error) {
+      console.error('Error saving plane:', error);
+      Alert.alert("Error", "Failed to save plane. Please try again.");
+    }
   };
 
   return (
     <ImageBackground source={require('../FPstuff/Bf109Details.jpg')} style={styles.background}>
       <View style={styles.overlay}>
         <View style={styles.inputcontainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter Name"
+            placeholderTextColor={'white'}
+            value={nameText}
+            onChangeText={setNameText}
+          />
           <TextInput
             style={styles.input}
             placeholder="Enter General Information"
@@ -74,7 +112,6 @@ const AddPlane: React.FC = () => {
             textStyle={{ color: 'white' }}
           />
           {image && <Image source={{ uri: image }} style={styles.image} />}
-
 
           <CustomLongButton 
             title="Save" 

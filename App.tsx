@@ -19,7 +19,6 @@ import NewPlaneDetails from './screens/NewPlaneDetail';
 import { RootStackParamList } from './type/types';
 
 
-
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 
@@ -114,7 +113,6 @@ const App: React.FC = () => {
 
            <Stack.Screen name="NewPlaneDetail" component={NewPlaneDetails}
             options={{
-            headerTitle: 'New Plane Details',
             headerStyle: styles.header, 
               headerTitleStyle: styles.headerTitle,
               headerTintColor: 'white', 

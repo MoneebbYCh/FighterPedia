@@ -1,5 +1,6 @@
 export interface Plane {
     id: string;
+    title: string;
     generalInfo: string;
     generalChar: string;
     performance: string;
@@ -7,7 +8,7 @@ export interface Plane {
   }
 export type RootStackParamList = {
     FighterCollection: undefined;
-    NewPlaneDetail: { plane: Plane }; 
+    NewPlaneDetail: { planeId: string }; 
     Home:undefined;
     Eras: undefined;
     Glossary:undefined;
@@ -15,7 +16,7 @@ export type RootStackParamList = {
     PlaneDetailBF110: undefined;
     BF109Collection: undefined;
     BF110Collection: undefined;
-    AddPlane: undefined;
+    AddPlane: {plane?: Plane},
     Splash: undefined;
     LogIn: undefined;
   };

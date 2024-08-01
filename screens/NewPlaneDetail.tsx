@@ -1,43 +1,129 @@
-import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useEffect, useLayoutEffect,useState } from 'react';
+import { View, Text, Image, ScrollView, StyleSheet, Button, Alert,ImageBackground } from 'react-native';
+import { RouteProp, useRoute, useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList, Plane } from '../type/types'; 
-
+import { deleteDataById, getDataById } from '../storage/storage';
+import styles from '../styles';
+import Drawer2 from '../components/Drawer2';
 
 type PlaneDetailRouteProp = RouteProp<RootStackParamList, 'NewPlaneDetail'>;
 
 const NewPlaneDetail: React.FC = () => {
   const route = useRoute<PlaneDetailRouteProp>();
-  const plane = route.params?.plane as Plane;
+  const { planeId } = route.params;
+  const [plane, setPlane] = useState<Plane | null>(null);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  if (!plane) {
-    return <Text>No data available</Text>;
-  }
+  useEffect(() => {
+    const fetchPlaneData = async () => {
+      try {
+        const planeData = await getDataById(planeId); 
+        setPlane(planeData);
+      } catch (error) {
+        console.error('Error fetching plane data:', error);
+      }
+    };
+
+    fetchPlaneData();
+  }, [planeId]);
+
+  useLayoutEffect(() => {
+    
+    navigation.setOptions({
+      title: plane?.title,
+      headerRight: () => (
+        <View style={styles.headerButtons}>
+          <Button
+            title="Edit"
+            onPress={() => {
+              if (plane) {
+                navigation.navigate('AddPlane', { plane });
+              } else {
+                console.warn('No plane data available to edit.');
+              }
+            }}
+            color="white"
+          />
+          <Button
+            title="Delete"
+            onPress={() => plane && handleDelete(plane.id)}
+            color="white"
+          />
+        </View>
+      ),
+    
+    });
+  
+  }, [plane, navigation]);
+
+  const handleDelete = async (id: string) => {
+    Alert.alert(
+      "Delete Plane",
+      "Are you sure you want to delete this plane?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              await deleteDataById(id);
+              navigation.navigate('FighterCollection');
+            } catch (error) {
+              console.error('Error deleting plane:', error);
+              Alert.alert("Error", "Failed to delete plane. Please try again.");
+            }
+        
+          }
+        }
+      ]
+    );
+  };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={{ uri: plane.image }} style={styles.image} />
-      <Text style={styles.text}>General Information: {plane.generalInfo}</Text>
-      <Text style={styles.text}>General Characteristics: {plane.generalChar}</Text>
-      <Text style={styles.text}>Performance: {plane.performance}</Text>
-    </ScrollView>
+
+    <ImageBackground source={require('../FPstuff/Bf109Details.jpg')} style={styles.background}>
+          <View style={styles.overlay}>
+          <View style={styles.DetailImageContainer}>
+            </View>
+      {plane ? (
+        <>
+        <ScrollView>
+      <Image source={{ uri: plane.image }} style={styles.DetailImage} />
+      
+      <View style={styles.HorizontalDetailContainer}>
+          <Text style = {styles.DetailHeading}> Operators </Text>
+          <ScrollView horizontal = {true} contentContainerStyle={styles.scrollcontainer}>
+                  <View style={styles.circle}>
+                  <Image source={require('../FPstuff/germany.png')} style={styles.image} />
+                  </View>
+
+                  </ScrollView>
+          </View>
+          
+      <Drawer2 title="General Information">
+      <Text style={styles.drawerText}>{plane.generalInfo}</Text>
+      </Drawer2>
+
+      <Drawer2 title="General Characteristics">
+      <Text style={styles.drawerText}>{plane.generalChar}</Text>
+      </Drawer2>
+      <Drawer2 title="Performance">
+      <Text style={styles.drawerText}>{plane.performance}</Text>
+      </Drawer2>
+      </ScrollView>
+      </>
+      ): (
+        <Text>no plane data available</Text>
+      )}
+    </View>
+    
+      </ImageBackground>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    marginBottom: 16,
-  },
-  text: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-});
+
 
 export default NewPlaneDetail;

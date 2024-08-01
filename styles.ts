@@ -214,6 +214,37 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
       },
+      newScrollImage: {
+        width: 350,
+        height: 175,
+        margin: 20,
+      resizeMode: "contain",
+      borderRadius: 5,
+        alignItems: 'center',
+      },
+      headerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 100,
+      },
+      newDetailcontainer: {
+        flex: 1,
+        padding: 16,
+      },
+      newDetailimage: {
+        width: '100%',
+        height: 200,
+        marginBottom: 16,
+      },
+      newDetailtext: {
+        fontSize: 16,
+        marginBottom: 8,
+      },
+      newDetailheaderButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 100,
+      },
     });
   
   export default styles;
