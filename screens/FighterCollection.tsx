@@ -83,7 +83,7 @@ const FighterCollection: React.FC = () => {
           data={combinedData}
           keyExtractor={item => item.id}
           renderItem={({ item }) => {
-            console.log(`Rendering item with source: ${JSON.stringify(item.source)}`); 
+            
             return (
               <TouchableOpacity
                 key={item.id}

@@ -6,6 +6,8 @@ export interface Plane {
     performance: string;
     image: string;
     operators: string[];
+    startYear:string;
+    endYear: string;
   }
 export type RootStackParamList = {
     FighterCollection: undefined;
@@ -25,5 +27,5 @@ export type RootStackParamList = {
   export interface Operator {
     id: string;
     name: string;
-    image: any; // Adjust type as necessary based on your image source type
+    image: any; 
   };

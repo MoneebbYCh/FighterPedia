@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         paddingLeft: 8,
         color: 'white',
+        fontWeight: 'bold'
       },
       inputimage: {
         width: 100,
@@ -269,6 +270,43 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
+    },
+    datePickerContainer: {
+      height:50,
+      flexDirection: 'row',
+      alignItems: 'center',
+      
+    },
+    datePickerText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: 'white'
+    },
+    label: {
+      color: 'white',
+      marginBottom: 10,
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+    dateinputcontainer: {
+      width: 150,
+      height: 50,
+    },
+    addoperatorheading: {
+      fontSize: 20,
+      marginLeft: 10,
+      textDecorationColor: 'white',
+      color: 'white',
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+    Yearbutton: {
+      flex: 1,
+      borderRadius: 2,
+      borderColor: 'white',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor : 'rgba(0, 0, 0, 0.5)'
     },
   });
   

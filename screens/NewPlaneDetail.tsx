@@ -109,6 +109,9 @@ const NewPlaneDetail: React.FC = () => {
         <ScrollView>
       <Image source={{ uri: plane.image }} style={styles.DetailImage} />
       
+      <Text style={styles.DetailHeading}>Year</Text>
+      <Text style={styles.YearText}>{plane.startYear} to {plane.endYear}</Text>
+
       <View style={styles.HorizontalDetailContainer}>
                 <Text style={styles.DetailHeading}>Operators</Text>
                 <ScrollView horizontal={true} contentContainerStyle={styles.scrollcontainer}>
@@ -122,11 +125,12 @@ const NewPlaneDetail: React.FC = () => {
                   })}
                 </ScrollView>
               </View>
-          
+
+      
+
       <Drawer2 title="General Information">
       <Text style={styles.drawerText}>{plane.generalInfo}</Text>
       </Drawer2>
-
       <Drawer2 title="General Characteristics">
       <Text style={styles.drawerText}>{plane.generalChar}</Text>
       </Drawer2>

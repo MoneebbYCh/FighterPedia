@@ -7,6 +7,9 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import styles from '../styles';
 import { generateUniqueId } from '../type/idGenerator'; 
 import { RootStackParamList, Plane } from '../type/types';
+import MonthYearPicker from 'react-native-month-year-picker';
+
+
 
 type AddPlaneRouteProp = RouteProp<RootStackParamList, 'AddPlane'>;
 
@@ -38,6 +41,12 @@ const AddPlane: React.FC = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [image, setImage] = useState<string | null>(null);
   const [selectedOperators, setSelectedOperators] = useState<string[]>([]);
+  const [startYear, setStartYear] = useState<Date | undefined>(undefined);
+const [endYear, setEndYear] = useState<Date | undefined>(undefined);
+const [showStartPicker, setShowStartPicker] = useState(false);
+  const [showEndPicker, setShowEndPicker] = useState(false);
+
+
 
 
   useEffect(() => {
@@ -48,6 +57,8 @@ const AddPlane: React.FC = () => {
       setPerformanceText(plane.performance);
       setSelectedOperators(plane.operators || []);
       setImage(plane.image);
+      setStartYear(plane.startYear ? new Date(plane.startYear) : undefined);
+      setEndYear(plane.endYear ? new Date(plane.endYear) : undefined);
     }
   }, [plane]);
 
@@ -70,6 +81,8 @@ const AddPlane: React.FC = () => {
     );
   };
 
+
+
   const handleSubmit = async () => {
     const newId = plane ? plane.id : generateUniqueId();
     if (typeof newId !== 'string' || newId.trim() === '') {
@@ -85,7 +98,9 @@ const AddPlane: React.FC = () => {
       generalChar: generalCharText, 
       performance: performanceText, 
       image: image || '',
-      operators: selectedOperators
+      operators: selectedOperators,
+      startYear: startYear ? startYear.toISOString().split('T')[0] : '', 
+    endYear: endYear ? endYear.toISOString().split('T')[0] : '',
     };
   
     try {
@@ -98,6 +113,20 @@ const AddPlane: React.FC = () => {
     } catch (error) {
       console.error('Error saving plane:', error);
       Alert.alert("Error", "Failed to save plane. Please try again.");
+    }
+  };
+
+  const handleStartDateChange = (event: any, date: Date | undefined) => {
+    setShowStartPicker(false);
+    if (date) {
+      setStartYear(date);
+    }
+  };
+
+  const handleEndDateChange = (event: any, date: Date | undefined) => {
+    setShowEndPicker(false);
+    if (date) {
+      setEndYear(date);
     }
   };
 
@@ -134,8 +163,41 @@ const AddPlane: React.FC = () => {
             onChangeText={setPerformanceText}
           />
 
+
+
+          <View style={styles.datePickerContainer}>
+                <CustomLongButton
+                  title={startYear ? `${startYear.getMonth() + 1}/${startYear.getFullYear()}` : 'Select Start Year'}
+                  onPress={() => setShowStartPicker(true)}
+                  buttonStyle={styles.Yearbutton}
+                  textStyle={styles.datePickerText}
+                />
+
+                <CustomLongButton
+                  title={endYear ? `${endYear.getMonth() + 1}/${endYear.getFullYear()}` : 'Select End Year'}
+                  onPress={() => setShowEndPicker(true)}
+                  buttonStyle={styles.Yearbutton}
+                  textStyle={styles.datePickerText}
+                />
+
+                {showStartPicker && (
+                  <MonthYearPicker
+                    onChange={handleStartDateChange}
+                    value={startYear || new Date()}
+                    mode='short'
+                  />
+                )}
+                {showEndPicker && (
+                  <MonthYearPicker
+                    onChange={handleEndDateChange}
+                    value={endYear || new Date()}
+                    mode='short'
+                  />
+                )}
+              </View>
+
           <View style={styles.HorizontalDetailContainer}>
-            <Text style={styles.DetailHeading}>Select Operators</Text>
+            <Text style={styles.addoperatorheading}>Select Operators</Text>
             <ScrollView horizontal={true} contentContainerStyle={styles.scrollcontainer2}>
               {operators.map((operator) => (
                 <TouchableOpacity
