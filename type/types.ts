@@ -5,6 +5,7 @@ export interface Plane {
     generalChar: string;
     performance: string;
     image: string;
+    operators: string[];
   }
 export type RootStackParamList = {
     FighterCollection: undefined;
@@ -21,3 +22,8 @@ export type RootStackParamList = {
     LogIn: undefined;
   };
   
+  export interface Operator {
+    id: string;
+    name: string;
+    image: any; // Adjust type as necessary based on your image source type
+  };

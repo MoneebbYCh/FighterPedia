@@ -1,10 +1,26 @@
 import React, { useEffect, useLayoutEffect,useState } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, Button, Alert,ImageBackground } from 'react-native';
 import { RouteProp, useRoute, useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList, Plane } from '../type/types'; 
+import { RootStackParamList, Plane, Operator } from '../type/types'; 
 import { deleteDataById, getDataById } from '../storage/storage';
 import styles from '../styles';
 import Drawer2 from '../components/Drawer2';
+
+
+const operators: Operator[] = [
+  { id: 'germany', name: 'Germany', image: require('../FPstuff/germany.png') },
+  { id: 'bulgaria', name: 'Bulgaria', image: require('../FPstuff/Bulgaria.jpg') },
+  { id: 'croatia', name: 'Croatia', image: require('../FPstuff/Croatia.jpg') },
+  { id: 'finland', name: 'Finland', image: require('../FPstuff/Finland.jpg') },
+  { id: 'hungary', name: 'Hungary', image: require('../FPstuff/Hungary.jpg') },
+  { id: 'italianSR', name: 'ItalianSR', image: require('../FPstuff/ItalianSR.png') },
+  { id: 'italy', name: 'Italy', image: require('../FPstuff/Italy.jpg') },
+  { id: 'romania', name: 'Romania', image: require('../FPstuff/Romania.jpg') },
+  { id: 'sovietUnion', name: 'SovietUnion', image: require('../FPstuff/SovietUnion.jpg') },
+  { id: 'spanishstate', name: 'SpanishState', image: require('../FPstuff/SpanishState.jpg') },
+  { id: 'switzerland', name: 'Switzerland', image: require('../FPstuff/Switzerland.jpg') },
+  { id: 'yugoslavia', name: 'Yugoslavia', image: require('../FPstuff/yugoslavia.jpg') },
+];
 
 type PlaneDetailRouteProp = RouteProp<RootStackParamList, 'NewPlaneDetail'>;
 
@@ -94,14 +110,18 @@ const NewPlaneDetail: React.FC = () => {
       <Image source={{ uri: plane.image }} style={styles.DetailImage} />
       
       <View style={styles.HorizontalDetailContainer}>
-          <Text style = {styles.DetailHeading}> Operators </Text>
-          <ScrollView horizontal = {true} contentContainerStyle={styles.scrollcontainer}>
-                  <View style={styles.circle}>
-                  <Image source={require('../FPstuff/germany.png')} style={styles.image} />
-                  </View>
-
-                  </ScrollView>
-          </View>
+                <Text style={styles.DetailHeading}>Operators</Text>
+                <ScrollView horizontal={true} contentContainerStyle={styles.scrollcontainer}>
+                  {plane.operators.map((operatorId) => {
+                    const operator = operators.find((op: Operator) => op.id === operatorId);
+                    return operator ? (
+                      <View key={operator.id} style={styles.circle}>
+                        <Image source={operator.image} style={styles.image} />
+                      </View>
+                    ) : null;
+                  })}
+                </ScrollView>
+              </View>
           
       <Drawer2 title="General Information">
       <Text style={styles.drawerText}>{plane.generalInfo}</Text>

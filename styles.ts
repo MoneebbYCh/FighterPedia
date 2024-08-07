@@ -245,6 +245,31 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: 100,
       },
-    });
+
+      scrollcontainer2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      circle2: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'transparent',
+      },
+      selectedCircle2: {
+        borderColor: 'white', 
+        borderWidth: 5,
+      },
+      image2: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+    },
+  });
   
   export default styles;

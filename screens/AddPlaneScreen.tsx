@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, ImageBackground, Alert } from 'react-native';
+import { View, Text, TextInput, Image, ImageBackground, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { saveData } from '../storage/storage';
 import CustomLongButton from '../components/CustomLongButton';
@@ -9,6 +9,22 @@ import { generateUniqueId } from '../type/idGenerator';
 import { RootStackParamList, Plane } from '../type/types';
 
 type AddPlaneRouteProp = RouteProp<RootStackParamList, 'AddPlane'>;
+
+const operators = [
+  { id: 'germany', name: 'Germany', image: require('../FPstuff/germany.png') },
+  {id: 'bulgaria', name: 'Bulgaria', image: require('../FPstuff/Bulgaria.jpg')},
+  { id: 'croatia', name: 'Croatia', image: require('../FPstuff/Croatia.jpg') },
+  { id: 'finland', name: 'Finland', image: require('../FPstuff/Finland.jpg') },
+  { id: 'hungary', name: 'Hungary', image: require('../FPstuff/Hungary.jpg') },
+  { id: 'italianSR', name: 'ItalianSR', image: require('../FPstuff/ItalianSR.png') },
+  { id: 'italy', name: 'Italy', image: require('../FPstuff/Italy.jpg') },
+  { id: 'romania', name: 'Romania', image: require('../FPstuff/Romania.jpg') },
+  { id: 'sovietUnion', name: 'SovietUnion', image: require('../FPstuff/SovietUnion.jpg') },
+  { id: 'spanishstate', name: 'SpanishState', image: require('../FPstuff/SpanishState.jpg') },
+  { id: 'switzerland', name: 'Switzerland', image: require('../FPstuff/Switzerland.jpg') },
+  { id: 'yugoslavia', name: 'Yugoslavia', image: require('../FPstuff/yugoslavia.jpg') },
+  
+];
 
 const AddPlane: React.FC = () => {
   const route = useRoute<AddPlaneRouteProp>();
@@ -21,6 +37,8 @@ const AddPlane: React.FC = () => {
   const [performanceText, setPerformanceText] = useState<string>('');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [image, setImage] = useState<string | null>(null);
+  const [selectedOperators, setSelectedOperators] = useState<string[]>([]);
+
 
   useEffect(() => {
     if (plane) {
@@ -28,6 +46,7 @@ const AddPlane: React.FC = () => {
       setGeneralInfoText(plane.generalInfo);
       setGeneralCharText(plane.generalChar);
       setPerformanceText(plane.performance);
+      setSelectedOperators(plane.operators || []);
       setImage(plane.image);
     }
   }, [plane]);
@@ -41,6 +60,14 @@ const AddPlane: React.FC = () => {
     } catch (error) {
       console.error('ImagePicker Error: ', error);
     }
+  };
+
+  const toggleOperatorSelection = (operatorId: string) => {
+    setSelectedOperators((prevSelectedOperators) => 
+      prevSelectedOperators.includes(operatorId)
+        ? prevSelectedOperators.filter(id => id !== operatorId)
+        : [...prevSelectedOperators, operatorId]
+    );
   };
 
   const handleSubmit = async () => {
@@ -57,7 +84,8 @@ const AddPlane: React.FC = () => {
       generalInfo: generalInfoText, 
       generalChar: generalCharText, 
       performance: performanceText, 
-      image: image || ''
+      image: image || '',
+      operators: selectedOperators
     };
   
     try {
@@ -65,7 +93,7 @@ const AddPlane: React.FC = () => {
       setSaveSuccess(true);
       setTimeout(() => {
         setSaveSuccess(false);
-        navigation.navigate('Home');
+        navigation.navigate('FighterCollection');
       }, 1000);
     } catch (error) {
       console.error('Error saving plane:', error);
@@ -105,6 +133,25 @@ const AddPlane: React.FC = () => {
             value={performanceText}
             onChangeText={setPerformanceText}
           />
+
+          <View style={styles.HorizontalDetailContainer}>
+            <Text style={styles.DetailHeading}>Select Operators</Text>
+            <ScrollView horizontal={true} contentContainerStyle={styles.scrollcontainer2}>
+              {operators.map((operator) => (
+                <TouchableOpacity
+                  key={operator.id}
+                  style={[
+                    styles.circle2,
+                    selectedOperators.includes(operator.id) && styles.selectedCircle2
+                  ]}
+                  onPress={() => toggleOperatorSelection(operator.id)}
+                >
+                  <Image source={operator.image} style={styles.image2} />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+
           <CustomLongButton
             title="Select Image"
             onPress={selectImage}
