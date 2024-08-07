@@ -7,8 +7,6 @@ function PlaneDetailBF109() {
     return(
       <ImageBackground source={require('../FPstuff/Bf109Details.jpg')} style={styles.background}>
           <View style={styles.overlay}>
-  
-  
           <View style={styles.DetailImageContainer}>
           <Image source={require('../FPstuff/MesserschmittBf109/im6.png')} style={styles.DetailImage}/>
           </View>
