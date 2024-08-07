@@ -18,6 +18,12 @@ const data = [
     { id: '9',  source: require('../../FighterPedia/FPstuff/MesserschmittBf110/im3.png'), title: 'Messerschmitt Bf 110'  },
     { id: '10',  source: require('../../FighterPedia/FPstuff/MesserschmittBf110/im4.png'), title: 'Messerschmitt Bf 110'  },
   ];
+  type CombinedDataItem = {
+    id: string;
+    source: any; 
+    title: string;
+    isDynamic?: boolean; 
+  };
 
 const FighterCollection: React.FC = () => {
   const [planes, setPlanes] = useState<Plane[]>([]);
@@ -42,9 +48,17 @@ const FighterCollection: React.FC = () => {
         fetchPlanes();
       }, [])
     );
-  
+    
 
-  
+    const combinedData: CombinedDataItem[] = [...data,...planes.map(plane => ({
+        id: plane.id,
+        source: { uri: plane.image },
+        title: plane.title,
+        isDynamic: true, 
+      })),
+    ];
+
+
     const handleImagePress = (id: string) => {
       const selectedPlane = planes.find(plane => plane.id === id);
       if (selectedPlane) {
@@ -64,33 +78,31 @@ const FighterCollection: React.FC = () => {
     };
     return(
       <ImageBackground source={require('../FPstuff/FighterCollectionBackground.jpg')} style={styles.background}>
-          <View style={styles.overlay}>
-      
-        <ScrollView contentContainerStyle={styles.scrollcontainer}>
-        {data.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.imageContainer}
-            onPress={() => handleImagePressdefault(item.title) }
-          >
-            <Image source={item.source} style={styles.image} />
-            <Text style={styles.imageTitle}>{item.title}</Text>
-          </TouchableOpacity>
-        ))}
-        {planes.map((Plane) => (
-            <TouchableOpacity
-              key={Plane.id}
-              style={styles.imageContainer}
-              onPress={() => handleImagePress(Plane.id)}
-            >
-              <Image source={{ uri: Plane.image }} style={styles.newScrollImage} />
-              <Text style={styles.imageTitle}>{Plane.title}</Text>
-            </TouchableOpacity>
-          ))}
-      </ScrollView>
+      <View style={styles.overlay}>
+        <FlatList
+          data={combinedData}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => {
+            console.log(`Rendering item with source: ${JSON.stringify(item.source)}`); 
+            return (
+              <TouchableOpacity
+                key={item.id}
+                style={styles.imageContainer}
+                onPress={() => item.isDynamic ? handleImagePress(item.id) : handleImagePressdefault(item.title)}
+              >
+                <Image
+                source={item.source}
+                style={item.isDynamic ? styles.newScrollImage : styles.image} 
+              />
+                <Text style={styles.imageTitle}>{item.title}</Text>
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
-        </ImageBackground>
-    )
-  };
-
+    </ImageBackground>
+  );
+};
+    
+ 
   export default FighterCollection;
