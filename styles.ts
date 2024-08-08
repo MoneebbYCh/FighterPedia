@@ -94,10 +94,10 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
     },
     ErasuttonContainer: {
-      flex: 1,
-      marginTop: 250,
-      marginBottom: 50,
-      alignSelf: 'center',
+      flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 50,
       
     },
     heading: {
@@ -272,9 +272,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     datePickerContainer: {
-      height:50,
+      
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between'
       
     },
     datePickerText: {
@@ -307,6 +308,31 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor : 'rgba(0, 0, 0, 0.5)'
+    },
+    YearText: {
+      textAlign: 'center',
+      fontSize: 20,
+      marginLeft: 10,
+      textDecorationColor: 'white',
+      color: 'white',
+      fontWeight: 'bold',
+      marginBottom: 10,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    }
+  ,
+    ErasNewScrollContainer: {
+      paddingVertical: 20,
+      paddingHorizontal: 10,
+    },
+    ErasNewimageContainer: {
+      alignItems: 'center',
+      marginBottom: 10,
+      
+    },
+    ErasNewimage: {
+      width: 200,
+    height: 200,
+    resizeMode: 'cover',
     },
   });
   

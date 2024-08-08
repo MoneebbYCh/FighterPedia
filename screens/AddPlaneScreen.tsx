@@ -169,14 +169,14 @@ const [showStartPicker, setShowStartPicker] = useState(false);
                 <CustomLongButton
                   title={startYear ? `${startYear.getMonth() + 1}/${startYear.getFullYear()}` : 'Select Start Year'}
                   onPress={() => setShowStartPicker(true)}
-                  buttonStyle={styles.Yearbutton}
+                  buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2, width: 150 }}
                   textStyle={styles.datePickerText}
                 />
 
                 <CustomLongButton
                   title={endYear ? `${endYear.getMonth() + 1}/${endYear.getFullYear()}` : 'Select End Year'}
                   onPress={() => setShowEndPicker(true)}
-                  buttonStyle={styles.Yearbutton}
+                  buttonStyle= {{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2, width: 150 }}
                   textStyle={styles.datePickerText}
                 />
 

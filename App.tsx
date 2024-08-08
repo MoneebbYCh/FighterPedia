@@ -17,6 +17,7 @@ import BF110Collection from './screens/BF110Collection';
 import AddPlaneScreen from './screens/AddPlaneScreen';
 import NewPlaneDetails from './screens/NewPlaneDetail';
 import { RootStackParamList } from './type/types';
+import FilteredPlanesScreen from './screens/FilteredPlanesScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -117,6 +118,13 @@ const App: React.FC = () => {
               headerTitleStyle: styles.headerTitle,
               headerTintColor: 'white', 
             }}/>
+
+            <Stack.Screen name="FilteredPlanesScreen" component={FilteredPlanesScreen}
+            options={{
+              headerStyle: styles.header, 
+                headerTitleStyle: styles.headerTitle,
+                headerTintColor: 'white', 
+              }}/>
 
       </Stack.Navigator>
   </NavigationContainer>

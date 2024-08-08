@@ -22,6 +22,7 @@ export type RootStackParamList = {
     AddPlane: {plane?: Plane},
     Splash: undefined;
     LogIn: undefined;
+    FilteredPlanesScreen: { startYear: number; endYear: number };
   };
   
   export interface Operator {

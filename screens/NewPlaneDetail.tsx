@@ -98,6 +98,11 @@ const NewPlaneDetail: React.FC = () => {
     );
   };
 
+  const extractYear = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.getFullYear();
+  };
+
   return (
 
     <ImageBackground source={require('../FPstuff/Bf109Details.jpg')} style={styles.background}>
@@ -110,7 +115,8 @@ const NewPlaneDetail: React.FC = () => {
       <Image source={{ uri: plane.image }} style={styles.DetailImage} />
       
       <Text style={styles.DetailHeading}>Year</Text>
-      <Text style={styles.YearText}>{plane.startYear} to {plane.endYear}</Text>
+      <Text style={styles.YearText}>{extractYear(plane.startYear)}    -     {extractYear(plane.endYear)}</Text>
+
 
       <View style={styles.HorizontalDetailContainer}>
                 <Text style={styles.DetailHeading}>Operators</Text>
