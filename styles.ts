@@ -94,10 +94,10 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
     },
     ErasuttonContainer: {
-      flex: 1,
-      marginTop: 250,
-      marginBottom: 50,
-      alignSelf: 'center',
+      flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 50,
       
     },
     heading: {
@@ -105,11 +105,14 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       textDecorationColor: 'white',
       color: 'white',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      alignSelf: 'center',
     },
     infotext: {
       fontSize: 14,
       marginBottom: 30,
+      marginLeft: 5,
+      marginRight: 5,
       textDecorationColor: 'white',
       color: 'white',
     },
@@ -184,6 +187,153 @@ const styles = StyleSheet.create({
         color: 'black',
         marginBottom: 10,
       },
-    });
+      inputcontainer: {
+        flex: 1,
+        padding: 16,
+      },
+      input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 12,
+        paddingLeft: 8,
+        color: 'white',
+        fontWeight: 'bold'
+      },
+      inputimage: {
+        width: 100,
+        height: 100,
+        marginBottom: 12,
+      },
+      SuccessMssgtext: {
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold',
+        borderRadius: 15,
+        marginTop: 30,
+        marginLeft: 80,
+        alignContent: 'center',
+        justifyContent: 'center',
+      },
+      newScrollImage: {
+        width: 350,
+        height: 175,
+        margin: 20,
+      resizeMode: "contain",
+      borderRadius: 5,
+        alignItems: 'center',
+      },
+      headerButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 100,
+      },
+      newDetailcontainer: {
+        flex: 1,
+        padding: 16,
+      },
+      newDetailimage: {
+        width: '100%',
+        height: 200,
+        marginBottom: 16,
+      },
+      newDetailtext: {
+        fontSize: 16,
+        marginBottom: 8,
+      },
+      newDetailheaderButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 100,
+      },
+
+      scrollcontainer2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      circle2: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginHorizontal: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: 'transparent',
+      },
+      selectedCircle2: {
+        borderColor: 'white', 
+        borderWidth: 5,
+      },
+      image2: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+    },
+    datePickerContainer: {
+      
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+      
+    },
+    datePickerText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: 'white'
+    },
+    label: {
+      color: 'white',
+      marginBottom: 10,
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+    dateinputcontainer: {
+      width: 150,
+      height: 50,
+    },
+    addoperatorheading: {
+      fontSize: 20,
+      marginLeft: 10,
+      textDecorationColor: 'white',
+      color: 'white',
+      fontWeight: 'bold',
+      marginBottom: 10,
+    },
+    Yearbutton: {
+      flex: 1,
+      borderRadius: 2,
+      borderColor: 'white',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor : 'rgba(0, 0, 0, 0.5)'
+    },
+    YearText: {
+      textAlign: 'center',
+      fontSize: 20,
+      marginLeft: 10,
+      textDecorationColor: 'white',
+      color: 'white',
+      fontWeight: 'bold',
+      marginBottom: 10,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    }
+  ,
+    ErasNewScrollContainer: {
+      paddingVertical: 20,
+      paddingHorizontal: 10,
+    },
+    ErasNewimageContainer: {
+      alignItems: 'center',
+      marginBottom: 10,
+      
+    },
+    ErasNewimage: {
+      width: 200,
+    height: 200,
+    resizeMode: 'cover',
+    },
+  });
   
   export default styles;

@@ -16,7 +16,7 @@ function HomeScreen () {
           <View style={styles.buttonContainer}>
             <CustomButton
               title='Name'
-              onPress={() => navigation.navigate('Fighter Collection')}
+              onPress={() => navigation.navigate('FighterCollection')}
               buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2, marginHorizontal: 10 }}
               textStyle={{ color: 'white' }} />
             <CustomButton
@@ -55,6 +55,12 @@ function HomeScreen () {
                 <CustomLongButton
                 title='Credits'
                 onPress={() => { } }
+                buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2 }}
+                textStyle={{ color: 'white' }} />
+
+                <CustomLongButton
+                title='Add Plane'
+                onPress={() => navigation.navigate('AddPlane') }
                 buttonStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', borderColor: 'gray', borderWidth: 2 }}
                 textStyle={{ color: 'white' }} />
   

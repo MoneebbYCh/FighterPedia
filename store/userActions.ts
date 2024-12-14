@@ -1,4 +1,4 @@
-import { LOGIN , CHANGE_NAME ,LOGOUT, GET_USER_BOOKS } from "./types"
+import { LOGIN , CHANGE_NAME ,LOGOUT, GET_USER_BOOKS } from "./storetypes"
 
 export const loginAction = () => {
     return {

@@ -33,6 +33,9 @@ const data3 = [
             <Text style={styles.imageTitle}>{item.title}</Text>
           </TouchableOpacity>
         ))}
+          
+
+
       </ScrollView>
   
        </View>

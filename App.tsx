@@ -1,14 +1,9 @@
-import React, { useRef, useEffect,useState } from 'react';
-import { View, Text, Image, StyleSheet, Animated, Button, TouchableOpacity, FlatList, ScrollView, ImageBackground} from 'react-native';
-import LogoImage from '../FighterPedia/FPstuff/file.png';
+import React from 'react';
 import styles from './styles';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import { Provider, useSelector, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { store } from './store/store'
-import { loginAction } from './store/userActions';
-import { logoutAction } from './store/userActions';
 import SplashScreen from './screens/SplashScreen';
 import SignScreen from './screens/SignScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -19,10 +14,16 @@ import PlaneDetailBF109 from './screens/PlaneDetailBF109';
 import PlaneDetailBF110 from './screens/PlaneDetailBF110';
 import BF109Collection from './screens/BF109Collection';
 import BF110Collection from './screens/BF110Collection';
-  
-  const Stack = createNativeStackNavigator();
+import AddPlaneScreen from './screens/AddPlaneScreen';
+import NewPlaneDetails from './screens/NewPlaneDetail';
+import { RootStackParamList } from './type/types';
+import FilteredPlanesScreen from './screens/FilteredPlanesScreen';
 
-const App = () => {
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+
+const App: React.FC = () => {
   return (
     <Provider store = {store}>
   <NavigationContainer>
@@ -47,7 +48,7 @@ const App = () => {
             headerTitleStyle: styles.headerTitle, 
           }} />
           
-          <Stack.Screen name="Fighter Collection" component={FighterCollection}
+          <Stack.Screen name="FighterCollection" component={FighterCollection}
           options={{
             headerTitle: 'Figther Collection',
             headerStyle: styles.header, 
@@ -102,6 +103,28 @@ const App = () => {
               headerTitleStyle: styles.headerTitle,
               headerTintColor: 'white', 
             }}/>
+
+            <Stack.Screen name="AddPlane" component={AddPlaneScreen}
+            options={{
+            headerTitle: 'Enter Plane Information',
+            headerStyle: styles.header, 
+              headerTitleStyle: styles.headerTitle,
+              headerTintColor: 'white', 
+            }}/>
+
+           <Stack.Screen name="NewPlaneDetail" component={NewPlaneDetails}
+            options={{
+            headerStyle: styles.header, 
+              headerTitleStyle: styles.headerTitle,
+              headerTintColor: 'white', 
+            }}/>
+
+            <Stack.Screen name="FilteredPlanesScreen" component={FilteredPlanesScreen}
+            options={{
+              headerStyle: styles.header, 
+                headerTitleStyle: styles.headerTitle,
+                headerTintColor: 'white', 
+              }}/>
 
       </Stack.Navigator>
   </NavigationContainer>
